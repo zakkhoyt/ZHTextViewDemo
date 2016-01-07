@@ -14,28 +14,6 @@
 
 @implementation ZHViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-// Single ' = italic
-// double '' = bold
 
 - (void)textViewDidChange:(UITextView *)textView {
     NSDictionary *boldAttr = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:textView.font.pointSize]};
@@ -79,16 +57,22 @@
                 return nil;
             }
 
-            // Get original attr text: bolded 'test'
+            // Get original attributed text and apply new attributes
             NSMutableAttributedString *prettyAttrString = [[attributedText attributedSubstringFromRange:prettyRange] mutableCopy];
             NSLog(@"prettyAttrString.string: %@", prettyAttrString.string);
             NSLog(@"prettyAttrString: %@", prettyAttrString);
+            // TODO: Find a way to "stack" attributes. There doesn't seem to be a simple way to do that.
             [prettyAttrString addAttributes:attributes range:NSMakeRange(0, prettyAttrString.string.length)];
             
-            // Apply the new formatting
+            // Apply the target attributedString to our whole attributedString
             NSMutableAttributedString *updateAttrString = [attributedText mutableCopy];
             [updateAttrString deleteCharactersInRange:fullRange];
             [updateAttrString insertAttributedString:prettyAttrString atIndex:fullRange.location];
+            
+            // Append a space to the end with no formatting. This allows the user to keep typing like normal.
+            NSAttributedString *space = [[NSAttributedString alloc]initWithString:@" " attributes:nil];
+            [updateAttrString appendAttributedString:space];
+            
             return updateAttrString;
             
         } else {
@@ -98,55 +82,5 @@
     
     return nil;
 }
-
-
-
-//-(NSAttributedString*)formatText:(NSString*)text betweenToken:(NSString*)token attributes:(NSDictionary*)attributes {
-//    NSError *error = nil;
-//    NSString *pattern = [NSString stringWithFormat:@"\%@([^\%@]*?)\%@", token, token, token];
-//    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-//                                                                               options:NSRegularExpressionCaseInsensitive
-//                                                                                 error:&error];
-//
-//    NSRange fullRange = NSMakeRange(0, text.length);
-//
-//    NSUInteger boldMatchCount = [regex numberOfMatchesInString:text options:NSMatchingReportCompletion range:fullRange];
-//
-//    if(boldMatchCount > 0) {
-//        NSLog(@"%lu matches", (unsigned long)boldMatchCount);
-//
-//        NSTextCheckingResult *result = [regex firstMatchInString:text options:NSMatchingReportCompletion range:fullRange];
-//        if(result) {
-//            NSRange fullRange = result.range;
-//            NSString *fullSubStr = [text substringWithRange:fullRange];
-//            NSLog(@"fullSubStr: %@", fullSubStr);
-//
-//            NSRange prettyRange = NSMakeRange(fullRange.location + 1*token.length, fullRange.length - 2*token.length);
-//            NSString *prettySubStr = [text substringWithRange:prettyRange];
-//            NSLog(@"prettySubStr: %@", prettySubStr );
-//
-//            if(prettyRange.length == 0) {
-//                return nil;
-//            }
-//
-//            NSMutableString *newString = [[NSMutableString alloc]initWithString:text];
-//            [newString replaceCharactersInRange:fullRange withString:prettySubStr];
-//
-//            NSRange attrRange = NSMakeRange(fullRange.location, fullRange.length - 2*token.length);
-//
-//            NSMutableAttributedString *newAttrString = [[NSMutableAttributedString alloc]initWithString:newString];
-//            [newAttrString addAttributes:attributes range:attrRange];
-//
-//            return newAttrString;
-//        } else {
-//            NSLog(@"Error");
-//        }
-//    } else {
-//        NSLog(@"No matches");
-//    }
-//
-//    return nil;
-//}
-
 
 @end
