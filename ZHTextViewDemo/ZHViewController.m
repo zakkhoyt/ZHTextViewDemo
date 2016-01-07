@@ -34,7 +34,7 @@
  }
  */
 
-// SIngle ' = italic
+// Single ' = italic
 // double '' = bold
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -61,6 +61,7 @@
     
     NSRange fullRange = NSMakeRange(0, attributedText.length);
     
+    // TODO enumerateMatchesIn...
     NSUInteger boldMatchCount = [regex numberOfMatchesInString:attributedText.string options:NSMatchingReportCompletion range:fullRange];
     
     if(boldMatchCount > 0) {
@@ -73,26 +74,23 @@
             NSLog(@"fullSubStr: %@", fullSubStr);
             
             NSRange prettyRange = NSMakeRange(fullRange.location + 1*token.length, fullRange.length - 2*token.length);
-            NSString *prettySubStr = [attributedText.string substringWithRange:prettyRange];
-            NSLog(@"prettySubStr: %@", prettySubStr );
-            
-            NSAttributedString *prettyAttrString = [attributedText attributedSubstringFromRange:prettyRange];
-            NSLog(@"prettyAttrString.string: %@", prettyAttrString.string );
             
             if(prettyRange.length == 0) {
                 return nil;
             }
+
+            // Get original attr text: bolded 'test'
+            NSMutableAttributedString *prettyAttrString = [[attributedText attributedSubstringFromRange:prettyRange] mutableCopy];
+            NSLog(@"prettyAttrString.string: %@", prettyAttrString.string);
+            NSLog(@"prettyAttrString: %@", prettyAttrString);
+            [prettyAttrString addAttributes:attributes range:NSMakeRange(0, prettyAttrString.string.length)];
             
-            NSMutableString *newString = [[NSMutableString alloc]initWithString:attributedText.string];
-            [newString replaceCharactersInRange:fullRange withString:prettySubStr];
+            // Apply the new formatting
+            NSMutableAttributedString *updateAttrString = [attributedText mutableCopy];
+            [updateAttrString deleteCharactersInRange:fullRange];
+            [updateAttrString insertAttributedString:prettyAttrString atIndex:fullRange.location];
+            return updateAttrString;
             
-            
-            NSRange attrRange = NSMakeRange(fullRange.location, fullRange.length - 2*token.length);
-            
-            NSMutableAttributedString *newAttrString = [[NSMutableAttributedString alloc]initWithString:newString];
-            [newAttrString addAttributes:attributes range:attrRange];
-            
-            return newAttrString;
         } else {
             NSLog(@"Error applying regex: %@", error.localizedDescription);
         }
