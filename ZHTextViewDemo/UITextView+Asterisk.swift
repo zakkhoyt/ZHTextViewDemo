@@ -37,9 +37,6 @@ extension UITextView {
             regex.enumerateMatchesInString(attributedText.string, options: .ReportCompletion, range: allRange, usingBlock: { (result: NSTextCheckingResult?, flags: NSMatchingFlags, pointer: UnsafeMutablePointer<ObjCBool>) -> Void in
                 if let result = result {
                     let fullRange = result.range
-                    let fullTextString = attributedText.string as NSString // force NSString so we can use NSRange instead of Range<..>
-                    let fullSubStr = fullTextString.substringWithRange(fullRange)
-                    print("fullSubStr: " + fullSubStr)
                     
                     let prettyRange = NSMakeRange(fullRange.location + 1*token.length, fullRange.length - 2*token.length)
                     if prettyRange.length == 0 {
@@ -48,8 +45,6 @@ extension UITextView {
                     
                     // Get original attributed text and apply new attributes
                     let prettyAttrString = attributedText.attributedSubstringFromRange(prettyRange).mutableCopy() as! NSMutableAttributedString
-                    print("prettyAttrString.string: " + prettyAttrString.string)
-                    print("prettyAttrString: " + prettyAttrString.description)
                     prettyAttrString.addAttributes(attributes as! [String : AnyObject], range: NSMakeRange(0, prettyAttrString.string.characters.count))
                     
                     // If cursor is at end of sequence, append a space with no formatting
@@ -61,7 +56,7 @@ extension UITextView {
                             let space = NSAttributedString(string: " ", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(pointSize)])
                             prettyAttrString.appendAttributedString(space)
                         } else {
-                            print("Font not set")
+                            print("Warning: Font not set")
                         }
                     }
                     

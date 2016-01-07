@@ -13,3 +13,7 @@ Pitfalls:
 
 Improvements:
 * This could be improved by stacking attributes. That is if you bolded a word then went back to italicise it, it would then be bold+italic. Or another command such as (***).
+
+
+
+*test* **bold** *test*
