@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         let originalSelectedRange = textView.selectedRange
         let attributedText = textView.attributedText
 
-        // TODO: This could be handled better with some Regex research. Basicaly unify the token and regex variables. 
+        // TODO: This could be handled better with some Regex research. Generate the regex from token string
         // Note: This function is dendent on the token.length for setting cursor positions. Token is easier to understand and pass in than a regex string.
         var pattern: NSString = ""
         if(token == "*") {
@@ -37,8 +37,8 @@ class ViewController: UIViewController {
                 print("\(matchCount) matches")
                 if let result = regex.firstMatchInString(attributedText.string, options: .ReportCompletion, range: allRange) {
                     let fullRange = result.range
-                    let textString = attributedText.string as NSString
-                    let fullSubStr = textString.substringWithRange(fullRange)
+                    let fullTextString = attributedText.string as NSString // force NSString so we can use NSRange instead of Range<..>
+                    let fullSubStr = fullTextString.substringWithRange(fullRange)
                     print("fullSubStr: " + fullSubStr)
                     
                     let prettyRange = NSMakeRange(fullRange.location + 1*token.length, fullRange.length - 2*token.length)
@@ -52,6 +52,15 @@ class ViewController: UIViewController {
                     print("prettyAttrString: " + prettyAttrString.description)
                     prettyAttrString.addAttributes(attributes as! [String : AnyObject], range: NSMakeRange(0, prettyAttrString.string.characters.count))
                     
+                    // If cursor is at end of sequence, append a space with no formatting
+                    var cursorAtEnd = false
+                    if fullRange.location + fullRange.length == originalSelectedRange.location {
+                        // end
+                        cursorAtEnd = true
+                        let space = NSAttributedString(string: " ", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(14.0)])
+                        prettyAttrString.appendAttributedString(space)
+                    }
+                    
                     // Apply the target attributedString to our whole attributedString
                     let updateAttrString = attributedText.mutableCopy() as! NSMutableAttributedString
                     updateAttrString.deleteCharactersInRange(fullRange)
@@ -61,11 +70,11 @@ class ViewController: UIViewController {
                     textView.attributedText = updateAttrString
                     
                     // Now set cursor. It will either be at the beginning or end of your entry
-                    if(originalSelectedRange.location-1*token.length == prettyRange.location - 1){
-                        //beginning
+                    if cursorAtEnd == false {
+                        // move to beginning
                         textView.selectedRange = NSMakeRange(fullRange.location, 0)
                     } else {
-                        //end
+                        // move to end
                         textView.selectedRange = NSMakeRange(fullRange.location + prettyAttrString.string.characters.count, 0)
                     }
                 }
