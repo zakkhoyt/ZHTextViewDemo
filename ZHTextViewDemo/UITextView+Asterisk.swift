@@ -13,6 +13,8 @@ enum UITextViewCursorPosition: UInt {
     case Back = 1
 }
 
+let kDefaultPointSize = CGFloat(14.0)
+
 enum UITextViewReplacement: UInt {
     case SingleAsterisk = 0
     case DoubleAsterisk = 1
@@ -38,22 +40,19 @@ enum UITextViewReplacement: UInt {
     var attributes: NSDictionary {
         switch self {
         case .SingleAsterisk:
-            return [NSFontAttributeName: UIFont.boldSystemFontOfSize(14)]
+            return [NSFontAttributeName: UIFont.italicSystemFontOfSize(kDefaultPointSize)]
         case .DoubleAsterisk:
-            return [NSFontAttributeName: UIFont.italicSystemFontOfSize(14)]
+            return [NSFontAttributeName: UIFont.boldSystemFontOfSize(kDefaultPointSize)]
         }
         
     }
 }
 
 extension UITextView {
-    
-    
     func formatText(replacement: UITextViewReplacement) {
         
         let originalSelectedRange = self.selectedRange
         let attributedText = self.attributedText
-        
         let token = replacement.token
         let pattern = replacement.pattern
         let attributes = replacement.attributes
@@ -96,12 +95,14 @@ extension UITextView {
                     self.attributedText = updateAttrString
                     
                     // Now set cursor. It will either be at the beginning or end of your entry
-                    if cursor == .Front {
+                    switch cursor {
+                    case .Front:
                         // move to beginning
                         self.selectedRange = NSMakeRange(fullRange.location, 0)
-                    } else {
+                    case .Back:
                         // move to end
                         self.selectedRange = NSMakeRange(fullRange.location + prettyAttrString.string.characters.count, 0)
+                        
                     }
                 }
             })

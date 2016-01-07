@@ -107,8 +107,8 @@
 				C60779F01C3DD4ED008E40A0 /* LaunchScreen.storyboard */,
 				C60779F31C3DD4ED008E40A0 /* Info.plist */,
 				C60779E91C3DD4ED008E40A0 /* ViewController.swift */,
-				C6077A1B1C3E0E82008E40A0 /* README.txt */,
 				C6077A1D1C3E30FD008E40A0 /* UITextView+Asterisk.swift */,
+				C6077A1B1C3E0E82008E40A0 /* README.txt */,
 			);
 			path = ZHTextViewDemo;
 			sourceTree = "<group>";
