@@ -14,7 +14,6 @@
 		C60779F21C3DD4ED008E40A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C60779F01C3DD4ED008E40A0 /* LaunchScreen.storyboard */; };
 		C60779FD1C3DD4ED008E40A0 /* ZHTextViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60779FC1C3DD4ED008E40A0 /* ZHTextViewDemoTests.swift */; };
 		C6077A081C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6077A071C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift */; };
-		C6077A161C3DD501008E40A0 /* ZHTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6077A151C3DD501008E40A0 /* ZHTextView.swift */; };
 		C6077A1C1C3E0E82008E40A0 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C6077A1B1C3E0E82008E40A0 /* README.txt */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +48,6 @@
 		C6077A031C3DD4ED008E40A0 /* ZHTextViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZHTextViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6077A071C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZHTextViewDemoUITests.swift; sourceTree = "<group>"; };
 		C6077A091C3DD4ED008E40A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C6077A151C3DD501008E40A0 /* ZHTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHTextView.swift; sourceTree = "<group>"; };
 		C6077A1B1C3E0E82008E40A0 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +104,6 @@
 				C60779EE1C3DD4ED008E40A0 /* Assets.xcassets */,
 				C60779F01C3DD4ED008E40A0 /* LaunchScreen.storyboard */,
 				C60779F31C3DD4ED008E40A0 /* Info.plist */,
-				C6077A151C3DD501008E40A0 /* ZHTextView.swift */,
 				C60779E91C3DD4ED008E40A0 /* ViewController.swift */,
 				C6077A1B1C3E0E82008E40A0 /* README.txt */,
 			);
@@ -263,7 +260,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6077A161C3DD501008E40A0 /* ZHTextView.swift in Sources */,
 				C60779EA1C3DD4ED008E40A0 /* ViewController.swift in Sources */,
 				C60779E81C3DD4ED008E40A0 /* AppDelegate.swift in Sources */,
 			);

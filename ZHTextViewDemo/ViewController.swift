@@ -10,13 +10,22 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var textView: ZHTextView!
+    @IBOutlet weak var textView: UITextView!
     
-    func formatTextView(textView: UITextView, betweenToken: NSString, attributes: NSDictionary){
+    func formatTextView(textView: UITextView, token: NSString, attributes: NSDictionary){
+
         let originalSelectedRange = textView.selectedRange
         let attributedText = textView.attributedText
-        let token = betweenToken as String
-        let pattern = NSString(format: "\\%@([^\\%@]*?)\\%@", token, token, token) as NSString
+
+        // TODO: This could be handled better with some Regex researc
+        var pattern: NSString = ""
+        if(token == "*") {
+            pattern = NSString(format: "\\*([^\\*]*?)\\*", token, token, token) as NSString
+        } else if token == "**" {
+            pattern = NSString(format: "\\*\\*([^\\*\\*]*?)\\*\\*", token, token, token) as NSString
+        } else {
+            return
+        }
         
         do {
             let regex = try NSRegularExpression(pattern: pattern as String, options: .CaseInsensitive)
@@ -33,7 +42,7 @@ class ViewController: UIViewController {
                     let fullSubStr = textString.substringWithRange(fullRange)
                     print("fullSubStr: " + fullSubStr)
                     
-                    let prettyRange = NSMakeRange(fullRange.location + 1*betweenToken.length, fullRange.length - 2*betweenToken.length)
+                    let prettyRange = NSMakeRange(fullRange.location + 1*token.length, fullRange.length - 2*token.length)
                     if prettyRange.length == 0 {
                         return
                     }
@@ -55,7 +64,7 @@ class ViewController: UIViewController {
                     textView.attributedText = updateAttrString
                     
                     // Now set cursor. It will either be at the beginning or end of your entry
-                    if(originalSelectedRange.location-1*betweenToken.length == prettyRange.location - 1){
+                    if(originalSelectedRange.location-1*token.length == prettyRange.location - 1){
                         //beginning
                         textView.selectedRange = NSMakeRange(fullRange.location, 0)
                     } else {
@@ -75,14 +84,13 @@ extension ViewController: UITextViewDelegate {
     func textViewDidChange(textView: UITextView) {
         if let pointSize = textView.font?.pointSize {
             let boldAttr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(pointSize)]
-            formatTextView(textView, betweenToken: "''", attributes: boldAttr)
+            formatTextView(textView, token: "**", attributes: boldAttr)
             
             let italicAttr = [NSFontAttributeName: UIFont.italicSystemFontOfSize(pointSize)]
-            formatTextView(textView, betweenToken: "'", attributes: italicAttr)
+            formatTextView(textView, token: "*", attributes: italicAttr)
             
         } else {
             print("Font not set for UITextView")
         }
-        
     }
 }

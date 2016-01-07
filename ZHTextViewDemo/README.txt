@@ -1,9 +1,11 @@
-This programming assignment had short but clear instructions:
+This programming assignment had the following instructions:
 
-Create a text area on iOS where if you type single asterisks around text it makes it italic, double makes it bold.
+"Create a text area on iOS where if you type single asterisks around text it makes it italic, double makes it bold."
 
-For this assignment I've implemented the logic in a ViewController which is triggered by a standard UITextView delegate. This logic could be moved into a UITextView subclass or any other location that would best fit a more defined scope.
+For this assignment I've implemented the logic directly in the ViewController which is triggered by a standard UITextView delegate. This logic could be moved into a UITextView subclass or category.
 
-As you type you will find that 'text' turns italic and ''text'' turns bold. I investigated a way to stack attributes so that you could apply bold and italic to the same piece of code, but didn't see that attribute stacking is a simple task (not impossible).
+As you type you will find that 'text' turns italic and ''text'' turns bold. I was able to set the cursor position correctly after the update as well.
 
-Another issue i experienced is that if the target text is at the end of the string (assume it's turning italic), that all text entered aftewards will also be italic. To remedy this I've appended a space to the end with normal text formatting.
+One case where it may not act as expected is if you type the double ticks at the back of a word first, then move to the front to complete it. It will instead double italicise.
+
+This could be improved by stacking attributes. That is if you bolded a word then went back to italicise it, it would then be bold-ital. Or a triple tick (''') command.
