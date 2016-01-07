@@ -12,7 +12,9 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var textView: ZHTextView!
     
-    func formatAttributedText(attributedText: NSAttributedString, betweenToken: NSString, attributes: NSDictionary) -> NSAttributedString? {
+    func formatTextView(textView: UITextView, betweenToken: NSString, attributes: NSDictionary){
+        let originalSelectedRange = textView.selectedRange
+        let attributedText = textView.attributedText
         let token = betweenToken as String
         let pattern = NSString(format: "\\%@([^\\%@]*?)\\%@", token, token, token) as NSString
         
@@ -33,7 +35,7 @@ class ViewController: UIViewController {
                     
                     let prettyRange = NSMakeRange(fullRange.location + 1*betweenToken.length, fullRange.length - 2*betweenToken.length)
                     if prettyRange.length == 0 {
-                        return nil
+                        return
                     }
                     
                     // Get original attributed text and apply new attributes
@@ -49,34 +51,38 @@ class ViewController: UIViewController {
                     updateAttrString.deleteCharactersInRange(fullRange)
                     updateAttrString.insertAttributedString(prettyAttrString, atIndex: fullRange.location)
                  
-                    // Append a space to the end with no formatting. This allows the user to keep typing like normal.
-                    let space = NSAttributedString(string: " ")
-                    updateAttrString.appendAttributedString(space)
+                    // Update textView.text
+                    textView.attributedText = updateAttrString
                     
-                    return updateAttrString
+                    // Now set cursor. It will either be at the beginning or end of your entry
+                    if(originalSelectedRange.location-1*betweenToken.length == prettyRange.location - 1){
+                        //beginning
+                        textView.selectedRange = NSMakeRange(fullRange.location, 0)
+                    } else {
+                        //end
+                        textView.selectedRange = NSMakeRange(fullRange.location + prettyAttrString.string.characters.count, 0)
+                    }
                 }
             }
         } catch _ {
-            print("caught exeption creating regex")
+            print("caught exception creating regex")
         }
-        return nil
     }
 }
 
 
 extension ViewController: UITextViewDelegate {
     func textViewDidChange(textView: UITextView) {
-        
         if let pointSize = textView.font?.pointSize {
             let boldAttr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(pointSize)]
-            if let boldAttrText = formatAttributedText(textView.attributedText, betweenToken: "''", attributes: boldAttr) {
-                textView.attributedText = boldAttrText;
-            }
+            formatTextView(textView, betweenToken: "''", attributes: boldAttr)
             
             let italicAttr = [NSFontAttributeName: UIFont.italicSystemFontOfSize(pointSize)]
-            if let italicAttrText = formatAttributedText(textView.attributedText, betweenToken: "'", attributes: italicAttr) {
-                textView.attributedText = italicAttrText;
-            }
+            formatTextView(textView, betweenToken: "'", attributes: italicAttr)
+            
+        } else {
+            print("Font not set for UITextView")
         }
+        
     }
 }

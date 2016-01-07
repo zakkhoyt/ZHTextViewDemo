@@ -15,7 +15,7 @@
 		C60779FD1C3DD4ED008E40A0 /* ZHTextViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60779FC1C3DD4ED008E40A0 /* ZHTextViewDemoTests.swift */; };
 		C6077A081C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6077A071C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift */; };
 		C6077A161C3DD501008E40A0 /* ZHTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6077A151C3DD501008E40A0 /* ZHTextView.swift */; };
-		C6077A1A1C3DEE7D008E40A0 /* ZHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6077A191C3DEE7D008E40A0 /* ZHViewController.m */; };
+		C6077A1C1C3E0E82008E40A0 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C6077A1B1C3E0E82008E40A0 /* README.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,9 +50,7 @@
 		C6077A071C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZHTextViewDemoUITests.swift; sourceTree = "<group>"; };
 		C6077A091C3DD4ED008E40A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6077A151C3DD501008E40A0 /* ZHTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHTextView.swift; sourceTree = "<group>"; };
-		C6077A171C3DEE7D008E40A0 /* ZHTextViewDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZHTextViewDemo-Bridging-Header.h"; sourceTree = "<group>"; };
-		C6077A181C3DEE7D008E40A0 /* ZHViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHViewController.h; sourceTree = "<group>"; };
-		C6077A191C3DEE7D008E40A0 /* ZHViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHViewController.m; sourceTree = "<group>"; };
+		C6077A1B1C3E0E82008E40A0 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,9 +108,7 @@
 				C60779F31C3DD4ED008E40A0 /* Info.plist */,
 				C6077A151C3DD501008E40A0 /* ZHTextView.swift */,
 				C60779E91C3DD4ED008E40A0 /* ViewController.swift */,
-				C6077A181C3DEE7D008E40A0 /* ZHViewController.h */,
-				C6077A191C3DEE7D008E40A0 /* ZHViewController.m */,
-				C6077A171C3DEE7D008E40A0 /* ZHTextViewDemo-Bridging-Header.h */,
+				C6077A1B1C3E0E82008E40A0 /* README.txt */,
 			);
 			path = ZHTextViewDemo;
 			sourceTree = "<group>";
@@ -241,6 +237,7 @@
 			files = (
 				C60779F21C3DD4ED008E40A0 /* LaunchScreen.storyboard in Resources */,
 				C60779EF1C3DD4ED008E40A0 /* Assets.xcassets in Resources */,
+				C6077A1C1C3E0E82008E40A0 /* README.txt in Resources */,
 				C60779ED1C3DD4ED008E40A0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,7 +265,6 @@
 			files = (
 				C6077A161C3DD501008E40A0 /* ZHTextView.swift in Sources */,
 				C60779EA1C3DD4ED008E40A0 /* ViewController.swift in Sources */,
-				C6077A1A1C3DEE7D008E40A0 /* ZHViewController.m in Sources */,
 				C60779E81C3DD4ED008E40A0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,7 +412,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vaporwarewolf.ZHTextViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ZHTextViewDemo/ZHTextViewDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -430,7 +426,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vaporwarewolf.ZHTextViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ZHTextViewDemo/ZHTextViewDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
