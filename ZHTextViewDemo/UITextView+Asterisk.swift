@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum UITextViewCursorPosition: UInt {
-    case Front = 0
-    case Back = 1
-}
-
 let kDefaultPointSize = CGFloat(14.0)
 
 enum UITextViewReplacement: UInt {
@@ -37,6 +32,7 @@ enum UITextViewReplacement: UInt {
         }
     }
     
+    
     var attributes: NSDictionary {
         switch self {
         case .SingleAsterisk:
@@ -44,21 +40,25 @@ enum UITextViewReplacement: UInt {
         case .DoubleAsterisk:
             return [NSFontAttributeName: UIFont.boldSystemFontOfSize(kDefaultPointSize)]
         }
-        
     }
 }
 
+
 extension UITextView {
+    enum UITextViewCursorPosition: UInt {
+        case Front = 0
+        case End = 1
+    }
+
+    
     func formatText(replacement: UITextViewReplacement) {
-        
-        let originalSelectedRange = self.selectedRange
-        let attributedText = self.attributedText
-        let token = replacement.token
-        let pattern = replacement.pattern
-        let attributes = replacement.attributes
-        
         do {
-            let regex = try NSRegularExpression(pattern: pattern as String, options: .CaseInsensitive)
+            let regex = try NSRegularExpression(pattern: replacement.pattern as String, options: .CaseInsensitive)
+            
+            let originalSelectedRange = self.selectedRange
+            let attributedText = self.attributedText
+            let token = replacement.token
+            let attributes = replacement.attributes
             let allRange = NSMakeRange(0, attributedText.length)
             regex.enumerateMatchesInString(attributedText.string, options: .ReportCompletion, range: allRange, usingBlock: { (result: NSTextCheckingResult?, flags: NSMatchingFlags, pointer: UnsafeMutablePointer<ObjCBool>) -> Void in
                 if let result = result {
@@ -77,7 +77,7 @@ extension UITextView {
                     var cursor = UITextViewCursorPosition.Front
                     if fullRange.location + fullRange.length == originalSelectedRange.location {
                         // end
-                        cursor = .Back
+                        cursor = .End
                         if let pointSize = self.font?.pointSize {
                             let space = NSAttributedString(string: " ", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(pointSize)])
                             prettyAttrString.appendAttributedString(space)
@@ -99,7 +99,7 @@ extension UITextView {
                     case .Front:
                         // move to beginning
                         self.selectedRange = NSMakeRange(fullRange.location, 0)
-                    case .Back:
+                    case .End:
                         // move to end
                         self.selectedRange = NSMakeRange(fullRange.location + prettyAttrString.string.characters.count, 0)
                         
