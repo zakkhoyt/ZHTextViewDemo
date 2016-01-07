@@ -25,9 +25,23 @@ class ViewController: UIViewController {
     
     func formatAttributedText(attributedText: NSAttributedString, betweenToken: NSString, attributes: NSDictionary) -> NSAttributedString?{
 
-        let pattern = "\'([^\']*?)\'"
+//        let pattern = "\'([^\']*?)\'"
+        
+//        @"\%@([^\%@]*?)\%@"
+//        \
+//        ([^\
+//        ]*?)\
+        
+//        var pattern = "\\"
+//        pattern = pattern + (betweenToken as String)
+//        pattern = pattern + "([^\\"
+//        pattern = pattern + (betweenToken as String)
+//        pattern = pattern + "]*?)\\"
+        let token = betweenToken as String
+        let pattern = NSString(format: "\\%@([^\\%@]*?)\\%@", token, token, token) as NSString
+        
         do {
-            let regex = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
+            let regex = try NSRegularExpression(pattern: pattern as String, options: .CaseInsensitive)
 
             let allRange = NSMakeRange(0, attributedText.length)
             let matchCount = regex.numberOfMatchesInString(attributedText.string, options: .ReportCompletion, range: allRange)
@@ -40,8 +54,8 @@ class ViewController: UIViewController {
                     let fullSubStr = textString.substringWithRange(fullRange)
                     print("fullSubStr: " + fullSubStr)
                     
-//                    let prettyRange = NSMakeRange(fullRange.location + 1*betweenToken.length, fullRange.length - 2*betweenToken.length)
-                    let prettyRange = NSMakeRange(fullRange.location + 1, fullRange.length - 2)
+                    let prettyRange = NSMakeRange(fullRange.location + 1*betweenToken.length, fullRange.length - 2*betweenToken.length)
+//                    let prettyRange = NSMakeRange(fullRange.location + 1, fullRange.length - 2)
                     if prettyRange.length == 0 {
                         return nil
                     }
@@ -55,21 +69,14 @@ class ViewController: UIViewController {
                     
                     
 //                    // Apply the target attributedString to our whole attributedString
-//                    NSMutableAttributedString *updateAttrString = [attributedText mutableCopy];
-//                    [updateAttrString deleteCharactersInRange:fullRange];
-//                    [updateAttrString insertAttributedString:prettyAttrString atIndex:fullRange.location];
                     let updateAttrString = attributedText.mutableCopy() as! NSMutableAttributedString
                     updateAttrString.deleteCharactersInRange(fullRange)
                     updateAttrString.insertAttributedString(prettyAttrString, atIndex: fullRange.location)
                  
 //                    // Append a space to the end with no formatting. This allows the user to keep typing like normal.
-//                    NSAttributedString *space = [[NSAttributedString alloc]initWithString:@" " attributes:nil];
-//                    [updateAttrString appendAttributedString:space];
-//                    
-//                    return updateAttrString;
-                    
                     let space = NSAttributedString(string: " ")
                     updateAttrString.appendAttributedString(space)
+                    
                     return updateAttrString
 
                     
