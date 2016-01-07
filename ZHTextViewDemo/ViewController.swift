@@ -12,31 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var textView: ZHTextView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    func formatAttributedText(attributedText: NSAttributedString, betweenToken: NSString, attributes: NSDictionary) -> NSAttributedString?{
-
-//        let pattern = "\'([^\']*?)\'"
-        
-//        @"\%@([^\%@]*?)\%@"
-//        \
-//        ([^\
-//        ]*?)\
-        
-//        var pattern = "\\"
-//        pattern = pattern + (betweenToken as String)
-//        pattern = pattern + "([^\\"
-//        pattern = pattern + (betweenToken as String)
-//        pattern = pattern + "]*?)\\"
+    func formatAttributedText(attributedText: NSAttributedString, betweenToken: NSString, attributes: NSDictionary) -> NSAttributedString? {
         let token = betweenToken as String
         let pattern = NSString(format: "\\%@([^\\%@]*?)\\%@", token, token, token) as NSString
         
@@ -48,6 +24,7 @@ class ViewController: UIViewController {
             
             if matchCount > 0 {
                 print("\(matchCount) matches")
+                
                 if let result = regex.firstMatchInString(attributedText.string, options: .ReportCompletion, range: allRange) {
                     let fullRange = result.range
                     let textString = attributedText.string as NSString
@@ -55,7 +32,6 @@ class ViewController: UIViewController {
                     print("fullSubStr: " + fullSubStr)
                     
                     let prettyRange = NSMakeRange(fullRange.location + 1*betweenToken.length, fullRange.length - 2*betweenToken.length)
-//                    let prettyRange = NSMakeRange(fullRange.location + 1, fullRange.length - 2)
                     if prettyRange.length == 0 {
                         return nil
                     }
@@ -68,32 +44,23 @@ class ViewController: UIViewController {
                     prettyAttrString.addAttributes(attributes as! [String : AnyObject], range: NSMakeRange(0, prettyAttrString.string.characters.count))
                     
                     
-//                    // Apply the target attributedString to our whole attributedString
+                    // Apply the target attributedString to our whole attributedString
                     let updateAttrString = attributedText.mutableCopy() as! NSMutableAttributedString
                     updateAttrString.deleteCharactersInRange(fullRange)
                     updateAttrString.insertAttributedString(prettyAttrString, atIndex: fullRange.location)
                  
-//                    // Append a space to the end with no formatting. This allows the user to keep typing like normal.
+                    // Append a space to the end with no formatting. This allows the user to keep typing like normal.
                     let space = NSAttributedString(string: " ")
                     updateAttrString.appendAttributedString(space)
                     
                     return updateAttrString
-
-                    
                 }
             }
         } catch _ {
             print("caught exeption creating regex")
         }
-        
-        
-        
-        
-        
         return nil
-        
     }
-    
 }
 
 
