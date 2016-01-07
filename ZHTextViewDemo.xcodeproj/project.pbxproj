@@ -15,6 +15,7 @@
 		C60779FD1C3DD4ED008E40A0 /* ZHTextViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60779FC1C3DD4ED008E40A0 /* ZHTextViewDemoTests.swift */; };
 		C6077A081C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6077A071C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift */; };
 		C6077A1C1C3E0E82008E40A0 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C6077A1B1C3E0E82008E40A0 /* README.txt */; };
+		C6077A1E1C3E30FD008E40A0 /* UITextView+asterisk.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6077A1D1C3E30FD008E40A0 /* UITextView+asterisk.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		C6077A071C3DD4ED008E40A0 /* ZHTextViewDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZHTextViewDemoUITests.swift; sourceTree = "<group>"; };
 		C6077A091C3DD4ED008E40A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6077A1B1C3E0E82008E40A0 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		C6077A1D1C3E30FD008E40A0 /* UITextView+asterisk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+asterisk.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				C60779F31C3DD4ED008E40A0 /* Info.plist */,
 				C60779E91C3DD4ED008E40A0 /* ViewController.swift */,
 				C6077A1B1C3E0E82008E40A0 /* README.txt */,
+				C6077A1D1C3E30FD008E40A0 /* UITextView+asterisk.swift */,
 			);
 			path = ZHTextViewDemo;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			files = (
 				C60779EA1C3DD4ED008E40A0 /* ViewController.swift in Sources */,
 				C60779E81C3DD4ED008E40A0 /* AppDelegate.swift in Sources */,
+				C6077A1E1C3E30FD008E40A0 /* UITextView+asterisk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
