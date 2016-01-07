@@ -17,11 +17,12 @@ class ViewController: UIViewController {
         let originalSelectedRange = textView.selectedRange
         let attributedText = textView.attributedText
 
-        // TODO: This could be handled better with some Regex researc
+        // TODO: This could be handled better with some Regex research. Basicaly unify the token and regex variables. 
+        // Note: This function is dendent on the token.length for setting cursor positions. Token is easier to understand and pass in than a regex string.
         var pattern: NSString = ""
         if(token == "*") {
             pattern = NSString(format: "\\*([^\\*]*?)\\*", token, token, token) as NSString
-        } else if token == "**" {
+s        } else if token == "**" {
             pattern = NSString(format: "\\*\\*([^\\*\\*]*?)\\*\\*", token, token, token) as NSString
         } else {
             return
@@ -29,13 +30,11 @@ class ViewController: UIViewController {
         
         do {
             let regex = try NSRegularExpression(pattern: pattern as String, options: .CaseInsensitive)
-
             let allRange = NSMakeRange(0, attributedText.length)
             let matchCount = regex.numberOfMatchesInString(attributedText.string, options: .ReportCompletion, range: allRange)
             
             if matchCount > 0 {
                 print("\(matchCount) matches")
-                
                 if let result = regex.firstMatchInString(attributedText.string, options: .ReportCompletion, range: allRange) {
                     let fullRange = result.range
                     let textString = attributedText.string as NSString
@@ -51,9 +50,7 @@ class ViewController: UIViewController {
                     let prettyAttrString = attributedText.attributedSubstringFromRange(prettyRange).mutableCopy() as! NSMutableAttributedString
                     print("prettyAttrString.string: " + prettyAttrString.string)
                     print("prettyAttrString: " + prettyAttrString.description)
-                    // TODO: Find a way to "Stack" attributes instead of replace
                     prettyAttrString.addAttributes(attributes as! [String : AnyObject], range: NSMakeRange(0, prettyAttrString.string.characters.count))
-                    
                     
                     // Apply the target attributedString to our whole attributedString
                     let updateAttrString = attributedText.mutableCopy() as! NSMutableAttributedString
