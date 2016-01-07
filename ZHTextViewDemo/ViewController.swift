@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         var pattern: NSString = ""
         if(token == "*") {
             pattern = NSString(format: "\\*([^\\*]*?)\\*", token, token, token) as NSString
-s        } else if token == "**" {
+        } else if token == "**" {
             pattern = NSString(format: "\\*\\*([^\\*\\*]*?)\\*\\*", token, token, token) as NSString
         } else {
             return
