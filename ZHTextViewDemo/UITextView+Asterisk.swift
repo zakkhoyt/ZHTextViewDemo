@@ -13,23 +13,50 @@ enum UITextViewCursorPosition: UInt {
     case Back = 1
 }
 
+enum UITextViewReplacement: UInt {
+    case SingleAsterisk = 0
+    case DoubleAsterisk = 1
+    
+    var token: NSString {
+        switch self {
+        case .SingleAsterisk:
+            return "*"
+        case .DoubleAsterisk:
+            return "**"
+        }
+    }
+    
+    var pattern: NSString {
+        switch self {
+        case .SingleAsterisk:
+            return "\\*([^\\*]*?)\\*"
+        case .DoubleAsterisk:
+            return "\\*\\*([^\\*\\*]*?)\\*\\*"
+        }
+    }
+    
+    var attributes: NSDictionary {
+        switch self {
+        case .SingleAsterisk:
+            return [NSFontAttributeName: UIFont.boldSystemFontOfSize(14)]
+        case .DoubleAsterisk:
+            return [NSFontAttributeName: UIFont.italicSystemFontOfSize(14)]
+        }
+        
+    }
+}
 
 extension UITextView {
-    func formatText(token: NSString, attributes: NSDictionary){
+    
+    
+    func formatText(replacement: UITextViewReplacement) {
         
         let originalSelectedRange = self.selectedRange
         let attributedText = self.attributedText
         
-        // TODO: This could be handled better with some Regex research. Generate the regex from token string
-        // Note: This function is dendent on the token.length for setting cursor positions. Token is easier to understand and pass in than a regex string.
-        var pattern: NSString = ""
-        if(token == "*") {
-            pattern = NSString(format: "\\*([^\\*]*?)\\*", token, token, token) as NSString
-        } else if token == "**" {
-            pattern = NSString(format: "\\*\\*([^\\*\\*]*?)\\*\\*", token, token, token) as NSString
-        } else {
-            return
-        }
+        let token = replacement.token
+        let pattern = replacement.pattern
+        let attributes = replacement.attributes
         
         do {
             let regex = try NSRegularExpression(pattern: pattern as String, options: .CaseInsensitive)

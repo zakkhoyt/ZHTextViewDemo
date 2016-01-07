@@ -14,15 +14,7 @@ class ViewController: UIViewController {
 
 extension ViewController: UITextViewDelegate {
     func textViewDidChange(textView: UITextView) {
-        if let pointSize = textView.font?.pointSize {
-            let boldAttr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(pointSize)]
-            textView.formatText("**", attributes: boldAttr)
-            
-            let italicAttr = [NSFontAttributeName: UIFont.italicSystemFontOfSize(pointSize)]
-            textView.formatText("*", attributes: italicAttr)
-            
-        } else {
-            print("Font not set for UITextView")
-        }
+        textView.formatText(UITextViewReplacement.SingleAsterisk)
+        textView.formatText(UITextViewReplacement.DoubleAsterisk)
     }
 }
