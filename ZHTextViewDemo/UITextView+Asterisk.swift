@@ -82,7 +82,6 @@ extension UITextView {
                         self.selectedRange = NSMakeRange(fullRange.location + prettyAttrString.string.characters.count, 0)
                     }
                 }
-                
             })
         } catch _ {
             print("caught exception creating regex")
