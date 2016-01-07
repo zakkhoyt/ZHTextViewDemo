@@ -1,5 +1,5 @@
 //
-//  UITextView+asterisk.swift
+//  UITextView+Asterisk.swift
 //  ZHTextViewDemo
 //
 //  Created by Zakk Hoyt on 1/6/16.
@@ -34,11 +34,8 @@ extension UITextView {
         do {
             let regex = try NSRegularExpression(pattern: pattern as String, options: .CaseInsensitive)
             let allRange = NSMakeRange(0, attributedText.length)
-            let matchCount = regex.numberOfMatchesInString(attributedText.string, options: .ReportCompletion, range: allRange)
-            
-            if matchCount > 0 {
-                print("\(matchCount) matches")
-                if let result = regex.firstMatchInString(attributedText.string, options: .ReportCompletion, range: allRange) {
+            regex.enumerateMatchesInString(attributedText.string, options: .ReportCompletion, range: allRange, usingBlock: { (result: NSTextCheckingResult?, flags: NSMatchingFlags, pointer: UnsafeMutablePointer<ObjCBool>) -> Void in
+                if let result = result {
                     let fullRange = result.range
                     let fullTextString = attributedText.string as NSString // force NSString so we can use NSRange instead of Range<..>
                     let fullSubStr = fullTextString.substringWithRange(fullRange)
@@ -60,8 +57,12 @@ extension UITextView {
                     if fullRange.location + fullRange.length == originalSelectedRange.location {
                         // end
                         cursor = .Back
-                        let space = NSAttributedString(string: " ", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(14.0)])
-                        prettyAttrString.appendAttributedString(space)
+                        if let pointSize = self.font?.pointSize {
+                            let space = NSAttributedString(string: " ", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(pointSize)])
+                            prettyAttrString.appendAttributedString(space)
+                        } else {
+                            print("Font not set")
+                        }
                     }
                     
                     // Apply the target attributedString to our whole attributedString
@@ -81,7 +82,8 @@ extension UITextView {
                         self.selectedRange = NSMakeRange(fullRange.location + prettyAttrString.string.characters.count, 0)
                     }
                 }
-            }
+                
+            })
         } catch _ {
             print("caught exception creating regex")
         }
