@@ -16,10 +16,10 @@ extension ViewController: UITextViewDelegate {
     func textViewDidChange(textView: UITextView) {
         if let pointSize = textView.font?.pointSize {
             let boldAttr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(pointSize)]
-            textView.formatTextView("**", attributes: boldAttr)
+            textView.formatText("**", attributes: boldAttr)
             
             let italicAttr = [NSFontAttributeName: UIFont.italicSystemFontOfSize(pointSize)]
-            textView.formatTextView("*", attributes: italicAttr)
+            textView.formatText("*", attributes: italicAttr)
             
         } else {
             print("Font not set for UITextView")

@@ -15,7 +15,7 @@ enum UITextViewCursorPosition: UInt {
 
 
 extension UITextView {
-    func formatTextView(token: NSString, attributes: NSDictionary){
+    func formatText(token: NSString, attributes: NSDictionary){
         
         let originalSelectedRange = self.selectedRange
         let attributedText = self.attributedText
